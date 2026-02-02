@@ -29,12 +29,21 @@ public:
 	UPROPERTY()
 	TArray<USceneComponent*> Exits;
 	
+	UPROPERTY()
+	ARoomBase* LatestSpawnedRoom;
+	
+	UPROPERTY()
+	bool bCanSpawn = false;
+	
 	UFUNCTION(BLueprintCallable)
 	void SpawnStarterRoom();
 	
 	UFUNCTION(BLueprintCallable)
 	void SpawnNextRoom();
 
+	UFUNCTION(BLueprintCallable)
+	void RemoveOverlappingRooms();
+	
 protected:
 
 	virtual void BeginPlay() override;

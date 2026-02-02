@@ -21,6 +21,9 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
 	USceneComponent* ExitPointsFolder;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
+	USceneComponent* OverlapFolder;
 
 protected:
 	
@@ -31,9 +34,6 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
 	USceneComponent* GeometryFolder;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
-	USceneComponent* OverlapFolder;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Cube_1;

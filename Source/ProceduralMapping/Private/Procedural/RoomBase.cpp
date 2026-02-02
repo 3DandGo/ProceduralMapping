@@ -40,6 +40,8 @@ ARoomBase::ARoomBase()
 	
 	DirectionArrow->SetupAttachment(DefaultSceneRoot);
 	
+	BoxCollision->SetupAttachment(OverlapFolder);
+	
 	Cube_1->SetupAttachment(GeometryFolder);
 	Cube_2->SetupAttachment(GeometryFolder);
 	Cube_3->SetupAttachment(GeometryFolder);

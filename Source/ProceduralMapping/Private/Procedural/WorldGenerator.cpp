@@ -4,6 +4,7 @@
 #include "Procedural/WorldGenerator.h"
 #include "Procedural/Rooms/RB_Room_1.h"
 #include "Procedural/RoomBase.h"
+#include "Components/BoxComponent.h"
 
 
 AWorldGenerator::AWorldGenerator()
@@ -35,12 +36,24 @@ void AWorldGenerator::SpawnStarterRoom()
 
 void AWorldGenerator::SpawnNextRoom()
 {
-	ARoomBase* LatestSpawnedRoom = this->GetWorld()->SpawnActor<ARoomBase>(SpawnableRoomsArray[rand() % SpawnableRoomsArray.Num()]);
+	bCanSpawn = true;
+	
+	LatestSpawnedRoom = this->GetWorld()->SpawnActor<ARoomBase>(SpawnableRoomsArray[rand() % SpawnableRoomsArray.Num()]);
 	
 	USceneComponent* SelectedExitPoint = Exits[rand() % Exits.Num()];
 	
 	LatestSpawnedRoom->SetActorLocation(SelectedExitPoint->GetComponentLocation());
 	LatestSpawnedRoom->SetActorRotation(SelectedExitPoint->GetComponentRotation());
+	
+	RemoveOverlappingRooms();
+	
+	if (bCanSpawn)
+	{
+		Exits.Remove(SelectedExitPoint);
+		TArray<USceneComponent*> LatestExitsPoints;
+		LatestSpawnedRoom->ExitPointsFolder->GetChildrenComponents(false, LatestExitsPoints);
+		Exits.Append(LatestExitsPoints);
+	}
 	
 	MaxSpawnableRooms = MaxSpawnableRooms - 1;
 	
@@ -48,4 +61,25 @@ void AWorldGenerator::SpawnNextRoom()
 	{
 		SpawnNextRoom();
 	}
+}
+
+void AWorldGenerator::RemoveOverlappingRooms()
+{
+	TArray<USceneComponent*> OverlappingRooms;
+	LatestSpawnedRoom->OverlapFolder->GetChildrenComponents(false, OverlappingRooms);
+	
+	TArray<UPrimitiveComponent*> OverlappingComponents;
+	
+	for (USceneComponent* E : OverlappingRooms)
+	{
+		Cast<UBoxComponent>(E)->GetOverlappingComponents(OverlappingComponents);
+	}
+	
+	for (UPrimitiveComponent* E : OverlappingComponents)
+	{
+		bCanSpawn = false;
+		MaxSpawnableRooms = MaxSpawnableRooms + 1;
+		LatestSpawnedRoom->Destroy();
+	}
+	
 }
