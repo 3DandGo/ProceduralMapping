@@ -2,6 +2,9 @@
 
 
 #include "Procedural/RoomBase.h"
+
+#include "MovieSceneSequenceID.h"
+#include "Chaos/AABBTree.h"
 #include "Components/ArrowComponent.h"
 #include "Components/BoxComponent.h"
 
@@ -9,6 +12,11 @@
 ARoomBase::ARoomBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+	
+	DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>("DefaultSceneRoot");
+	GeometryFolder = CreateDefaultSubobject<USceneComponent>("GeometryFolder");
+	OverlapFolder = CreateDefaultSubobject<USceneComponent>("OverlapFolder");
+	ExitPointsFolder = CreateDefaultSubobject<USceneComponent>("ExitPointsFolder");
 	
 	Cube_1 = CreateDefaultSubobject<UStaticMeshComponent>("Cube One");
 	Cube_2 = CreateDefaultSubobject<UStaticMeshComponent>("Cube Two");
@@ -24,7 +32,25 @@ ARoomBase::ARoomBase()
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>("Box Collision");
 	
 	DirectionArrow = CreateDefaultSubobject<UArrowComponent>("Direction Arrow");
-
+	
+	SetRootComponent(DefaultSceneRoot);
+	GeometryFolder->SetupAttachment(DefaultSceneRoot);
+	OverlapFolder->SetupAttachment(DefaultSceneRoot);
+	ExitPointsFolder->SetupAttachment(DefaultSceneRoot);
+	
+	DirectionArrow->SetupAttachment(DefaultSceneRoot);
+	
+	Cube_1->SetupAttachment(GeometryFolder);
+	Cube_2->SetupAttachment(GeometryFolder);
+	Cube_3->SetupAttachment(GeometryFolder);
+	Cube_4->SetupAttachment(GeometryFolder);
+	Cube_5->SetupAttachment(GeometryFolder);
+	Cube_6->SetupAttachment(GeometryFolder);
+	Cube_7->SetupAttachment(GeometryFolder);
+	Cube_8->SetupAttachment(GeometryFolder);
+	Floor->SetupAttachment(GeometryFolder);
+	
+	DirectionArrow->bHiddenInGame = false;
 }
 
 void ARoomBase::BeginPlay()

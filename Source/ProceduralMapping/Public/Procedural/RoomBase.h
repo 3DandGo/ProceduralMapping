@@ -7,6 +7,7 @@
 #include "RoomBase.generated.h"
 
 class UStaticMeshComponent;
+class USceneComponent;
 
 UCLASS()
 class PROCEDURALMAPPING_API ARoomBase : public AActor
@@ -21,6 +22,18 @@ public:
 protected:
 	
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
+	USceneComponent* DefaultSceneRoot;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
+	USceneComponent* GeometryFolder;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
+	USceneComponent* OverlapFolder;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
+	USceneComponent* ExitPointsFolder;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Cube_1;
