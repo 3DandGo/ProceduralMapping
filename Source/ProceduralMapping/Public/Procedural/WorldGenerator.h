@@ -23,8 +23,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Rooms")
 	TArray<TSubclassOf<ARoomBase>> SpawnableRoomsArray;
 	
+	UPROPERTY(EditAnywhere, Category = "Rooms")
+	int32 MaxSpawnableRooms = 0;
+	
+	UPROPERTY()
+	TArray<USceneComponent*> Exits;
+	
 	UFUNCTION(BLueprintCallable)
 	void SpawnStarterRoom();
+	
+	UFUNCTION(BLueprintCallable)
+	void SpawnNextRoom();
 
 protected:
 

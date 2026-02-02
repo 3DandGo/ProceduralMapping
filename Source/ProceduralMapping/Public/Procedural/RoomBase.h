@@ -18,6 +18,9 @@ public:
 	
 	ARoomBase();
 	virtual void Tick(float DeltaTime) override;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
+	USceneComponent* ExitPointsFolder;
 
 protected:
 	
@@ -31,9 +34,6 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
 	USceneComponent* OverlapFolder;
-	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components");
-	USceneComponent* ExitPointsFolder;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UStaticMeshComponent* Cube_1;
