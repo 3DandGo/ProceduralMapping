@@ -37,7 +37,6 @@ void AWorldGenerator::SpawnStarterRoom()
 void AWorldGenerator::SpawnNextRoom()
 {
 	bCanSpawn = true;
-	
 	LatestSpawnedRoom = this->GetWorld()->SpawnActor<ARoomBase>(SpawnableRoomsArray[rand() % SpawnableRoomsArray.Num()]);
 	
 	USceneComponent* SelectedExitPoint = Exits[rand() % Exits.Num()];
@@ -45,7 +44,7 @@ void AWorldGenerator::SpawnNextRoom()
 	LatestSpawnedRoom->SetActorLocation(SelectedExitPoint->GetComponentLocation());
 	LatestSpawnedRoom->SetActorRotation(SelectedExitPoint->GetComponentRotation());
 	
-	RemoveOverlappingRooms();
+	
 	
 	if (bCanSpawn)
 	{
@@ -56,6 +55,8 @@ void AWorldGenerator::SpawnNextRoom()
 	}
 	
 	MaxSpawnableRooms = MaxSpawnableRooms - 1;
+	
+	RemoveOverlappingRooms();
 	
 	if (MaxSpawnableRooms > 0)
 	{
@@ -69,7 +70,6 @@ void AWorldGenerator::RemoveOverlappingRooms()
 	LatestSpawnedRoom->OverlapFolder->GetChildrenComponents(false, OverlappingRooms);
 	
 	TArray<UPrimitiveComponent*> OverlappingComponents;
-	
 	for (USceneComponent* E : OverlappingRooms)
 	{
 		Cast<UBoxComponent>(E)->GetOverlappingComponents(OverlappingComponents);

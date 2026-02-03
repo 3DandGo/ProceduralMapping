@@ -24,7 +24,7 @@ public:
 	TArray<TSubclassOf<ARoomBase>> SpawnableRoomsArray;
 	
 	UPROPERTY(EditAnywhere, Category = "Rooms")
-	int32 MaxSpawnableRooms = 0;
+	int32 MaxSpawnableRooms;
 	
 	UPROPERTY()
 	TArray<USceneComponent*> Exits;
@@ -33,7 +33,7 @@ public:
 	ARoomBase* LatestSpawnedRoom;
 	
 	UPROPERTY()
-	bool bCanSpawn = false;
+	bool bCanSpawn;
 	
 	UFUNCTION(BLueprintCallable)
 	void SpawnStarterRoom();
